@@ -8,6 +8,6 @@ feature 'User creates a todo' do
     fill_in 'Title', with: 'A new todo'
     click_on 'Submit'
 
-    expect(page).to have_css '.todos li', text: 'A new todo'
+    expect(page).to have_content('A new todo')
   end
 end

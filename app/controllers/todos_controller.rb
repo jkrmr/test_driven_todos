@@ -2,7 +2,7 @@ class TodosController < ApplicationController
   before_filter :authenticate
 
   def index
-    @todos = Todo.all
+    @todos = Todo.where(user: current_user)
   end
 
   def new
@@ -11,6 +11,7 @@ class TodosController < ApplicationController
 
   def create
     @todo = Todo.new(todo_params)
+    @todo.user = current_user
 
     if @todo.save
       redirect_to todos_url

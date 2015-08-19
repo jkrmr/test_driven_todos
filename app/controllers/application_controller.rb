@@ -16,4 +16,8 @@ class ApplicationController < ActionController::Base
   def sign_in(user)
     session[:current_email] = user.email
   end
+
+  def current_user
+    @current_user ||= User.find_by(email: session[:current_email])
+  end
 end
