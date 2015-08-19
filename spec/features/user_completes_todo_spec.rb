@@ -7,6 +7,8 @@ feature 'User completes a todo' do
 
     click_on 'Mark complete', match: :first
 
-    expect(page).to have_css '.todos li.completed', text: user.todos.first.title
+    user.todos.each do |todo|
+      expect(page).to display_completed_todo(todo.title)
+    end
   end
 end
