@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe TodosController do
+  include SessionsHelper
 
   context 'with an unauthenticated user' do
     describe 'GET #index' do
@@ -15,7 +16,7 @@ describe TodosController do
   context 'with an authenticated user' do
     describe 'GET #index' do
       it 'responds with success' do
-        session[:current_email] = create(:user).email
+        sign_in create(:user)
 
         get :index
 
@@ -23,7 +24,7 @@ describe TodosController do
       end
 
       it 'renders the index template' do
-        session[:current_email] = create(:user).email
+        sign_in create(:user)
 
         get :index
 
@@ -32,7 +33,7 @@ describe TodosController do
 
       it 'displays todos belonging to the user' do
         user = create(:user_with_todos)
-        session[:current_email] = user.email
+        sign_in user
 
         get :index
 
@@ -42,7 +43,7 @@ describe TodosController do
 
     describe 'GET #new' do
       it 'responds with success' do
-        session[:current_email] = create(:user).email
+        sign_in create(:user)
 
         get :new
 
@@ -53,7 +54,7 @@ describe TodosController do
     describe 'POST #create' do
       context 'with valid params' do
         it 'redirects to todo index' do
-          session[:current_email] = create(:user).email
+          sign_in create(:user)
 
           post :create, todo: { title: 'A new todo.' }
 
@@ -63,7 +64,7 @@ describe TodosController do
 
       context 'with invalid params' do
         it 'responds with :new template' do
-          session[:current_email] = create(:user).email
+          sign_in create(:user)
 
           post :create, todo: { title: '' }
 
