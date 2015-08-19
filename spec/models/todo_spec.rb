@@ -17,4 +17,14 @@ describe Todo, type: :model do
       expect(todo).to_not be_completed
     end
   end
+
+  describe '#complete!' do
+    it 'sets the :completed_at attribute' do
+      todo = create(:todo)
+
+      todo.complete!
+
+      expect(todo).to be_completed
+    end
+  end
 end
