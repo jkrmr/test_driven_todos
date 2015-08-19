@@ -27,4 +27,14 @@ describe Todo, type: :model do
       expect(todo).to be_completed
     end
   end
+
+  describe '#mark_incomplete!' do
+    it 'unsets the :completed_at attribute' do
+      todo = create(:todo)
+
+      todo.mark_incomplete!
+
+      expect(todo).to_not be_completed
+    end
+  end
 end
